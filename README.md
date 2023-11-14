@@ -30,13 +30,13 @@ localhost/Web2TpeParte3/api/canciones/
 
 GET BY ID
 
-localhost/Web2TpeParte3/api/canciones/:ID          ("POR EJEMPLO")    localhost/Web2TpeParte3/api/canciones/12
+localhost/Web2TpeParte3/api/canciones/:ID          ("POR EJEMPLO")    localhost/Web2TpeParte3/api/canciones/8
 
 
 
 ordenPor Y orden 
 
-Utilizando los parametros cFields y ordenes. podemos establecer orden decendente (DESC) o ascendente (ASC) a lo ingresado en ordenPor:
+Utilizando los parametros ordenPor y orden. podemos establecer orden decendente (DESC) o ascendente (ASC) a lo ingresado en ordenPor:
 
 titulo 
 Duración 
@@ -55,7 +55,7 @@ localhost/Web2TpeParte3/api/canciones?pagina=1&limite=3
 
 FILTRO 
 
-utilizamos los parametros campo y valor 
+utilizamos los parametros cFields y valor 
 
 localhost/Web2TpeParte3/api/canciones?cFields=albumID&valor=1
 
