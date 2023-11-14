@@ -24,152 +24,93 @@
        // /api/canciones?sort=nombre&order=asc&field=nombre&value=UnNombre&page=1&limit=3
 
         function get ($params =[]) {
+
             if (empty($params)) {
                 $cFields= ['titulo ','Duración','albumID'];
                 $ordenes = ['ASC','DESC'];
-                $final=null;
-                if(isset($_GET['campo']) && isset($_GET['valor'])){
+                  
 
-                    if(in_array($_GET['campo'],$cFields)){
-                        $campo = $_GET['campo'];
-                        $valor = $_GET['valor'];
-    
-                        $final = "WHERE $campo = '$valor'";
-    
-                        if(isset($_GET['ordenPor'])){
-                            if(in_array($_GET['ordenPor'],$cFields)){
-                                $ordenPor = $_GET['ordenPor'];
-                                if(isset($_GET['orden'])){
-                                    $orden = null;
-                                    if(in_array($_GET['orden'],$ordenes)){
-                                        $orden = $_GET['orden'];
-                                    }else{
-                                        $orden = "ASC";
-                                    }
-                                }
-    
-                                $final .= " ORDER BY $ordenPor $orden ";
-    
-                                if(isset($_GET['pagina'])){
-                                    if(is_numeric($_GET['pagina'])){
-                                        $pagina = $_GET['pagina'];
-                                        
-                                        if(isset($_GET['limite']) && is_numeric($_GET['limite'])){
-                                            $limite = $_GET['limite'];
-                                        }else{
-                                            $limite = 3;
-                                        }
-    
-                                        $inicio = ((int)$pagina - 1) * (int)$limite;
-                                        $final .= " LIMIT $inicio,$limite ";
-                                    }else{
-                                        $this->view->response("Pagina invalida,por favor seleccione un valor numerico",400);
-                                        return;
-                                    }
-                                }
-                            }else{
-                                $this->view->response("Orden invalido,por favor seleccione un orden adecuado",400);
-                                return;
-                            }
-                        }else if(isset($_GET['pagina'])){
-                            if(is_numeric($_GET['pagina'])){
-                                $pagina = $_GET['pagina'];
-                                
-                                if(isset($_GET['limite']) && is_numeric($_GET['limite'])){
-                                    $limite = $_GET['limite'];
-                                }else{
-                                    $limite = 3;
-                                }
-    
-                                $inicio = ((int)$pagina - 1) * (int)$limite;
-                                $final .= " LIMIT $inicio,$limite ";
-                            }else{
-                                $this->view->response("Pagina invalida,por favor seleccione un valor numerico",400);
-                                return;
-                            }
-                        }
-                    }else {
-                        $this->view->response("Campo incorrecto,seleccione un valor del dominio.",400);
-                        return;
-                    }
-    
-                }else if(isset($_GET['ordenPor'])&& isset($_GET['orden'])){
-    
-                    if(in_array(($_GET['ordenPor']),$cFields)){
-                        $ordenPor = $_GET['ordenPor'];
-                        
-                        if(in_array($_GET['orden'],$ordenes)){
-                            $orden = $_GET['orden'];
-                        }
-                        else{
-                            $orden = "ASC";
-                        }
-    
-                        $final = "ORDER BY $ordenPor $orden ";
-    
-                        if(isset($_GET['pagina'])){
-                            if(is_numeric($_GET['pagina'])){
-                                $pagina = $_GET['pagina'];
-    
-                                if(isset($_GET['limite']) && is_numeric($_GET['limite'])){
-                                    $limite = $_GET['limite'];
-                                }else{
-                                    $limite = 3;
-                                }
-    
-                                $inicio = ((int)$pagina - 1) * (int)$limite;
-                                $final .= "LIMIT $inicio,$limite ";
-                            }else{
-                                $this->view->response("Pagina invalida,por favor seleccione un valor numerico",400);
-                                return;
-                            }
-                        }     
-                    }else{
-                        $this->view->response("ordenPor invalido,por favor seleccione uno adecuado",400);
-                        return;
-                    }
-    
-                    
-    
-                }else if(isset($_GET['pagina'])){
-    
-                    if(is_numeric($_GET['pagina'])){
-                        $pagina = $_GET['pagina'];
-                        
-                    
-                        if(isset($_GET['limite'])){
-                            $limite = $_GET['limite'];
+                    $consultaFinal = "";
+                    $parcialCampo = "";
+                    $ordenPorParcial = "";
+                    $paginadoParcial = "";
+        
+                    if(isset($_GET['campo']) && isset($_GET['valor'])){
+        
+                        if(in_array($_GET['campo'],$cFields)){
+                            
+                            $campo = $_GET['campo'];
+                            $valor = $_GET['valor'];
+        
+                            $parcialCampo = "WHERE $campo = '$valor'";
+        
                         }else{
-                            $limite = 3;
+                            $this->view->response("Campo incorrecto,seleccione un valor del dominio.",400);
+                            return;
                         }
-    
-                        $inicio = ((int)$pagina - 1) * ((int)$limite);
-                        $final .= "LIMIT $inicio,$limite ";
+        
+                    }
+                    
+                    if(isset($_GET['ordenPor'])&& isset($_GET['orden'])){
+        
+                        if(in_array(($_GET['ordenPor']),$cFields)){
+                            $ordenPor = $_GET['ordenPor'];
+                            
+                            if(in_array($_GET['orden'],$ordenes)){
+                                $orden = $_GET['orden'];
+                            }
+                            else{
+                                $this->view->response("Debe seleccionar un orden adecuado",400);
+                                return;
+                            }
+        
+                            $ordenPorParcial = "ORDER BY $ordenPor $orden ";
+                        }else{
+                            $this->view->response("ordenPor invalido,por favor seleccione uno adecuado",400);
+                            return;
+                        }
+                    }
+                    
+                    if(isset($_GET['pagina'])){
+        
+                        if(is_numeric($_GET['pagina'])){
+                            $pagina = $_GET['pagina'];
+        
+                            if(isset($_GET['limite'])){
+                                $limite = $_GET['limite'];
+                            }else{
+                                $limite = 3;
+                            }
+        
+                            $inicio = ((int)$pagina - 1) * ((int)$limite);
+        
+                            $paginadoParcial = "LIMIT $inicio,$limite ";
+        
+                        }else{
+                            $this->view->response("Pagina invalida,por favor seleccione un valor numerico",400);
+                            return;
+                        }
+        
+                    }
+                    
+                    $consultaFinal = $parcialCampo.$ordenPorParcial.$paginadoParcial; //PREPARO : WHERE nombre = 'valor' ORDER BY precio ASC LIMIT 1,3
+        
+                    $productos = $this->model->getCancionesOrdenado($consultaFinal);
+                    
+                    if($productos){
+                        $this->view->response($productos,200);
+                        return;
                     }else{
-                        $this->view->response("Pagina invalida,por favor seleccione un valor numerico",400);
+                        $this->view->response("No se han encontrado productos relacionados con su busqueda",404);
                         return;
                     }
-    
-                }else{
-                    $final = "";
-                }
-    
-                $final .= ";";
-    
-                $productos = $this->model->getCancionesOrdenado($final);
-                
-                if($productos){
-                    $this->view->response($productos,200);
-                    return;
-                }else{
-                    $this->view->response("No se han encontrado productos relacionados con su busqueda",404);
-                    return;
-                }
+
+
        
             }else{
                 if($params[':ID']){
                     $id = $params[':ID'];
-                    $cancion = $this -> model ->getCancionByID($id); // getCanciones o getCancionesByID?
+                    $cancion = $this -> model ->getCancionByID($id); 
 
                     if($cancion){
                         $this->view->response($cancion,200);

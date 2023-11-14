@@ -6,7 +6,7 @@ require_once './config.php';
     }
 
     class AuthHelper {
-        function obtenerAuthHeaders() {
+       public function obtenerAuthHeaders() {
             $encabezado = "";
             if(isset($_SERVER['HTTP_AUTHORIZATION']))
                 $encabezado = $_SERVER['HTTP_AUTHORIZATION'];

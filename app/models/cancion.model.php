@@ -62,11 +62,10 @@ function getCancionesByAlbum($id) {
 
 
 function actualizarCancion($id, $titulo, $duracion, $albumID) {
-    $query = $this->db->prepare('UPDATE ´canciones´ SET titulo =?, Duración =?, albumID =? WHERE ID =?');
+    $query = $this->db->prepare("UPDATE `canciones` SET titulo = ?, Duración = ?, albumID = ? WHERE ID = ?");
     $query->execute([$titulo, $duracion, $albumID, $id]);
     return $query;
 }
-
 
 
 

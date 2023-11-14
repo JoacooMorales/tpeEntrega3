@@ -6,7 +6,7 @@ class UserApiController extends ApiController {
     private $model;
     private $helper;
 
-    function construct(){
+    function __construct(){
         parent::__construct();
         $this->model = new UserModel();
         $this->helper = new AuthHelper();
@@ -36,8 +36,8 @@ class UserApiController extends ApiController {
 
         $usuario = $this->model->getByUsername($nombreUsuario);
 
-        if($usuario&&password_verify($password,$usuario->clave)) {
-            $usuario = [ "nombre" => $usuario->nombre, "id" => $usuario->id];
+        if($usuario&&password_verify($password,$usuario->password)) {
+            $usuario = [ "nombre" => $usuario->username, "id" => $usuario->ID];
             $token = $this->helper->crearToken($usuario);
             $this->view->response($token,200);
             return;

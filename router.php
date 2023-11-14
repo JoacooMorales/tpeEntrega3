@@ -17,7 +17,7 @@ $router = new Router();
 
     $router->addRoute('canciones/:ID','DELETE', 'CancionesApiController', 'delete');
 
-    $router->addRoute('user/token'   , 'GET'  , 'UserApiController'     , 'obtenerToken'   );
+    $router->addRoute('auth/token'   , 'GET'  , 'UserApiController'     , 'obtenerToken'   );
 
 $router->route($_GET['resource'], $_SERVER['REQUEST_METHOD']);
 
