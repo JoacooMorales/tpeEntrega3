@@ -19,6 +19,13 @@ class CancionModel {
     
         return $canciones;
     }
+
+    function getCancionesOrdenado($final = ""){
+        $query = $this->db->prepare("SELECT * FROM canciones $final");
+        $query->execute();
+        $canciones = $query->fetchAll(PDO::FETCH_OBJ);
+        return $canciones;
+    }
     
 
     /**
@@ -35,6 +42,8 @@ class CancionModel {
 function deleteCanciones($id) {
     $query = $this->db->prepare('DELETE FROM canciones WHERE ID = ?');
     $query->execute([$id]);
+    $deleted = $query->fetch(PDO::FETCH_OBJ);
+    return $deleted;
 }
 
 function getCancionByID($id) {    
@@ -57,5 +66,9 @@ function actualizarCancion($id, $titulo, $duracion, $albumID) {
     $query->execute([$titulo, $duracion, $albumID, $id]);
     return $query;
 }
+
+
+
+
 
 }
