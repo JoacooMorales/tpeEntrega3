@@ -1,5 +1,5 @@
 <?php
-    require_once ('./app/views/api.views.php');
+    require_once ('./app/views/api.view.php');
 
 
      class ApiController {
