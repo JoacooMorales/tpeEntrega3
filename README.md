@@ -67,7 +67,10 @@ localhost/Web2TpeParte3/api/canciones?campo=albumID&valor=4
 
 ## AUTORIZACION
 
+para poder identificarnos en la api debemos utilizar el metodo GET y cambiar nuestro endpoint a:
 
+auth/token (localhost/Web2TpeParte3/api/auth/token)
 
+y hay que iniciar sesion con username y password (webadmin) y (admin) y esto nos da el token para poder insertar,editar o eliminar.
 
 
