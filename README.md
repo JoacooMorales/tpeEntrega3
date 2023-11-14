@@ -55,9 +55,8 @@ localhost/Web2TpeParte3/api/canciones?pagina=1&limite=3
 
 FILTRO 
 
-utilizamos los parametros cFields y valor 
+utilizamos los parametros campo y valor 
 
-localhost/Web2TpeParte3/api/canciones?cFields=albumID&valor=1
-
+localhost/Web2TpeParte3/api/canciones?campo=albumID&valor=4
 
 
